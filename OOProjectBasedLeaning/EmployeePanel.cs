@@ -1,30 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OOProjectBasedLeaning
 {
-
     public class EmployeePanel : Panel
     {
         public int EmployeeId => employee.Id;
-
         private Employee employee;
 
         public EmployeePanel(Employee employee)
         {
-
             this.employee = employee;
 
-            InitializeComponent();
+            this.Size = new Size(320, 140); // 高さを十分に確保
+            this.BorderStyle = BorderStyle.FixedSingle;
 
+            InitializeComponent();
+            SetupStatusButton(); // ← 状態確認ボタンをここで追加
         }
 
         private void InitializeComponent()
         {
-
             Label employeeNameLabel = new Label
             {
                 Text = employee.Name,
@@ -41,46 +42,27 @@ namespace OOProjectBasedLeaning
 
             Controls.Add(employeeNameLabel);
             Controls.Add(guestNameTextBox);
-
         }
-        public void SetupWorkButtons()
+
+        public void SetupStatusButton()
         {
-            var clockInButton = new Button
+            var statusButton = new Button
             {
-                Text = "出勤",
-                Location = new Point(20, 40)
+                Text = "状態確認",
+                Location = new Point(20, 50),
+                Size = new Size(80, 25)
             };
 
-            var clockOutButton = new Button
+            statusButton.Click += (sender, e) =>
             {
-                Text = "退勤",
-                Location = new Point(100, 40)
+                string message = employee.IsAtWork()
+                    ? $"{employee.Name} は出勤中です"
+                    : $"{employee.Name} は退勤済みまたは未出勤です";
+
+                MessageBox.Show(message, "勤務状態");
             };
 
-            var logLabel = new Label
-            {
-                Location = new Point(20, 70),
-                AutoSize = true
-            };
-
-            clockInButton.Click += (sender, e) =>
-            {
-                employee.ClockIn();
-                logLabel.Text = $"{employee.Name} 出勤: {DateTime.Now:HH:mm:ss}";
-            };
-
-            clockOutButton.Click += (sender, e) =>
-            {
-                employee.ClockOut();
-                logLabel.Text = $"{employee.Name} 退勤: {DateTime.Now:HH:mm:ss}";
-            };
-
-            Controls.Add(clockInButton);
-            Controls.Add(clockOutButton);
-            Controls.Add(logLabel);
+            Controls.Add(statusButton);
         }
-
-
     }
-
 }

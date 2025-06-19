@@ -25,18 +25,15 @@ namespace OOProjectBasedLeaning
 
         private void CreateGuestEvent(object sender, EventArgs e)
         {
-
-
             var employee = CreateEmployee();
 
-            // パネル追加
-            Controls.Add(new EmployeePanel(employee)
+            var panel = new EmployeePanel(employee)
             {
-                Location = new Point(10, 10 + Controls.Count * 30),
-                Width = 300,
-            });
+                Location = new Point(10, 10 + Controls.Count * 150), // 縦方向の高さを調整
+            };
 
-            // HomeForm に送信
+            Controls.Add(panel);
+
             var homeForm = Application.OpenForms
                 .OfType<HomeForm>()
                 .FirstOrDefault();
@@ -45,8 +42,8 @@ namespace OOProjectBasedLeaning
             {
                 homeForm.AddEmployee(employee);
             }
-
         }
+
 
 
         private Employee CreateEmployee()
@@ -57,18 +54,7 @@ namespace OOProjectBasedLeaning
             return new EmployeeModel(employeeId, "Employee" + employeeId);
 
         }
-        public void PrepareForWork(Employee employee)
-        {
-            // Controls の中から該当 EmployeePanel を探す
-            foreach (Control ctrl in Controls)
-            {
-                if (ctrl is EmployeePanel panel && panel.EmployeeId == employee.Id)
-                {
-                    panel.SetupWorkButtons();
-                    break;
-                }
-            }
-        }
+
 
 
     }
