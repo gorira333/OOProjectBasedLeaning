@@ -95,7 +95,7 @@ namespace OOProjectBasedLeaning
 
         public void PunchIn(int employeeId)
         {
-            // 何もしない
+            // 何もしない1
         }
 
         public void PunchOut(int employeeId)
