@@ -32,10 +32,10 @@
             // 
             // HomeForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(758, 524);
-            Location = new Point(0, 670);
+            ClientSize = new Size(531, 314);
+            Margin = new Padding(2, 2, 2, 2);
             Name = "HomeForm";
             StartPosition = FormStartPosition.Manual;
             Text = "HomeForm";
