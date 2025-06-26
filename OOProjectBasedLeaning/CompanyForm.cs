@@ -27,10 +27,15 @@ namespace OOProjectBasedLeaning
                 AutoScroll = true,
                 FlowDirection = FlowDirection.TopDown,
                 WrapContents = false,
-                Padding = new Padding(10)
+                Padding = new Padding(10),
+                BackColor = Color.FromArgb(240, 240, 240)
             };
 
             Controls.Add(workPanelArea);
+            this.Text = "社員打刻管理";
+            this.Font = new Font("Segoe UI", 10);
+            this.BackColor = Color.WhiteSmoke;
+            this.Size = new Size(400, 700);
         }
 
         /// <summary>
@@ -47,48 +52,76 @@ namespace OOProjectBasedLeaning
 
             var panel = new Panel
             {
-                Size = new Size(360, 90),
+                Size = new Size(360, 110),
                 Margin = new Padding(5),
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                BackColor = Color.White,
             };
 
             var nameLabel = new Label
             {
                 Text = $"社員: {employee.Name}",
                 Location = new Point(10, 10),
-                AutoSize = true
+                AutoSize = true,
+                Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                ForeColor = Color.FromArgb(30, 30, 30)
             };
 
-            var logLabel = new Label
+            var clockInLabel = new Label
             {
                 Location = new Point(10, 50),
-                AutoSize = true
+                AutoSize = true,
+                Text = $"{employee.Name} 出勤: 未登録",
+                ForeColor = Color.DarkGreen,
+                Font = new Font("Segoe UI", 9, FontStyle.Italic)
+            };
+
+            var clockOutLabel = new Label
+            {
+                Location = new Point(10, 75),
+                AutoSize = true,
+                Text = $"{employee.Name} 退勤: 未登録",
+                ForeColor = Color.DarkRed,
+                Font = new Font("Segoe UI", 9, FontStyle.Italic)
             };
 
             var clockInButton = new Button
             {
                 Text = "出勤",
-                Location = new Point(150, 10),
-                Size = new Size(60, 25)
+                Location = new Point(220, 15),
+                Size = new Size(60, 30),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.SeaGreen,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Cursor = Cursors.Hand
             };
+            clockInButton.FlatAppearance.BorderSize = 0;
 
             var clockOutButton = new Button
             {
                 Text = "退勤",
-                Location = new Point(220, 10),
-                Size = new Size(60, 25)
+                Location = new Point(290, 15),
+                Size = new Size(60, 30),
+                FlatStyle = FlatStyle.Flat,
+                BackColor = Color.Crimson,
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                Cursor = Cursors.Hand
             };
+            clockOutButton.FlatAppearance.BorderSize = 0;
 
             clockInButton.Click += (sender, e) =>
             {
                 try
                 {
                     employee.ClockIn();
-                    logLabel.Text = $"{employee.Name} 出勤: {DateTime.Now:yyyy/MM/dd HH:mm:ss}";
+                    var now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                    clockInLabel.Text = $"{employee.Name} 出勤: {now}";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"出勤エラー: {ex.Message}");
+                    MessageBox.Show($"出勤エラー: {ex.Message}", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
 
@@ -97,20 +130,27 @@ namespace OOProjectBasedLeaning
                 try
                 {
                     employee.ClockOut();
-                    logLabel.Text = $"{employee.Name} 退勤: {DateTime.Now:yyyy/MM/dd HH:mm:ss}";
+                    var now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                    clockOutLabel.Text = $"{employee.Name} 退勤: {now}";
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"退勤エラー: {ex.Message}");
+                    MessageBox.Show($"退勤エラー: {ex.Message}", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             };
 
             panel.Controls.Add(nameLabel);
+            panel.Controls.Add(clockInLabel);
+            panel.Controls.Add(clockOutLabel);
             panel.Controls.Add(clockInButton);
             panel.Controls.Add(clockOutButton);
-            panel.Controls.Add(logLabel);
 
             workPanelArea.Controls.Add(panel);
+        }
+
+        private void CompanyForm_Load(object sender, EventArgs e)
+        {
+            // 初期ロード処理があればここに
         }
     }
 }
