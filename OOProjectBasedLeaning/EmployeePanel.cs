@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OOProjectBasedLeaning
@@ -17,11 +13,11 @@ namespace OOProjectBasedLeaning
         {
             this.employee = employee;
 
-            this.Size = new Size(320, 140); // 高さを十分に確保
+            this.Size = new Size(320, 140);
             this.BorderStyle = BorderStyle.FixedSingle;
 
             InitializeComponent();
-            SetupStatusButton(); // ← 状態確認ボタンをここで追加
+            SetupStatusButton();
         }
 
         private void InitializeComponent()
@@ -55,11 +51,8 @@ namespace OOProjectBasedLeaning
 
             statusButton.Click += (sender, e) =>
             {
-                string message = employee.IsAtWork()
-                    ? $"{employee.Name} は出勤中です"
-                    : $"{employee.Name} は退勤済みまたは未出勤です";
-
-                MessageBox.Show(message, "勤務状態");
+                string message = employee.GetStatusMessage();
+                MessageBox.Show($"{employee.Name} の状態：{message}", "勤務状態");
             };
 
             Controls.Add(statusButton);

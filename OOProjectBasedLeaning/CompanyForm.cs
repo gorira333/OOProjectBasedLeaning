@@ -84,7 +84,7 @@ namespace OOProjectBasedLeaning
                 try
                 {
                     employee.ClockIn();
-                    logLabel.Text = $"{employee.Name} 出勤: {DateTime.Now:HH:mm:ss}";
+                    logLabel.Text = $"{employee.Name} 出勤: {DateTime.Now:yyyy/MM/dd HH:mm:ss}";
                 }
                 catch (Exception ex)
                 {
@@ -97,7 +97,7 @@ namespace OOProjectBasedLeaning
                 try
                 {
                     employee.ClockOut();
-                    logLabel.Text = $"{employee.Name} 退勤: {DateTime.Now:HH:mm:ss}";
+                    logLabel.Text = $"{employee.Name} 退勤: {DateTime.Now:yyyy/MM/dd HH:mm:ss}";
                 }
                 catch (Exception ex)
                 {

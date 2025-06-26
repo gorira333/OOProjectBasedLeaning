@@ -21,14 +21,14 @@ namespace OOProjectBasedLeaning
                 WrapContents = false
             };
 
-            Controls.Add(employeeListPanel); // 最後に追加して隠れないように
+            Controls.Add(employeeListPanel);
         }
 
         public void AddEmployee(Employee employee)
         {
             var panel = new Panel
             {
-                Size = new Size(300, 60),
+                Size = new Size(380, 60),
                 Margin = new Padding(5),
                 BorderStyle = BorderStyle.FixedSingle
             };
@@ -48,8 +48,18 @@ namespace OOProjectBasedLeaning
                 Size = new Size(75, 25)
             };
 
+            var homeButton = new Button
+            {
+                Text = "帰宅",
+                Tag = employee,
+                Location = new Point(285, 10),
+                Size = new Size(75, 25)
+            };
+
             departButton.Click += (sender, e) =>
             {
+                employee.Depart(); // 出発記録
+
                 var companyForm = Application.OpenForms
                     .OfType<CompanyForm>()
                     .FirstOrDefault();
@@ -60,8 +70,27 @@ namespace OOProjectBasedLeaning
                 }
             };
 
+            homeButton.Click += (sender, e) =>
+            {
+                try
+                {
+                    if (employee.IsAtWork())
+                    {
+                        employee.ClockOut();
+                    }
+                    employee.ArriveHome();
+                    MessageBox.Show($"{employee.Name} は帰宅しました", "帰宅処理");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"帰宅処理に失敗しました: {ex.Message}", "エラー");
+                }
+            };
+
+
             panel.Controls.Add(label);
             panel.Controls.Add(departButton);
+            panel.Controls.Add(homeButton);
             employeeListPanel.Controls.Add(panel);
         }
     }
