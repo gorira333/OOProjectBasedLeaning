@@ -10,6 +10,7 @@ namespace OOProjectBasedLeaning
         private int employeeId = 10000;
         private FlowLayoutPanel employeeContainer;
         private Button createButton;
+        private TextBox nameInput; // ← 名前入力欄
 
         public EmployeeCreatorForm()
         {
@@ -18,7 +19,6 @@ namespace OOProjectBasedLeaning
             InitializeLayout();
         }
 
-        // フォームの見た目・基本設定を整える
         private void SetupFormStyle()
         {
             this.Text = "Employee Creator";
@@ -27,9 +27,16 @@ namespace OOProjectBasedLeaning
             this.Font = new Font("Segoe UI", 10);
         }
 
-        // レイアウト初期化（ボタンと従業員パネル用コンテナを作成）
         private void InitializeLayout()
         {
+            // 名前入力欄
+            nameInput = new TextBox
+            {
+                PlaceholderText = "名前を入力してください",
+                Width = 300,
+                Margin = new Padding(10)
+            };
+
             // 作成ボタン
             createButton = new Button
             {
@@ -44,7 +51,7 @@ namespace OOProjectBasedLeaning
             };
             createButton.Click += CreateGuestEvent;
 
-            // 従業員パネルを縦に積むコンテナ
+            // 従業員パネルコンテナ
             employeeContainer = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -55,7 +62,16 @@ namespace OOProjectBasedLeaning
                 BackColor = Color.White
             };
 
-            // 全体レイアウト用パネル
+            // レイアウトパネル
+            var inputPanel = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                AutoSize = true,
+                Dock = DockStyle.Top
+            };
+            inputPanel.Controls.Add(nameInput);
+            inputPanel.Controls.Add(createButton);
+
             var mainPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -65,16 +81,23 @@ namespace OOProjectBasedLeaning
             mainPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
             mainPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
 
-            mainPanel.Controls.Add(createButton, 0, 0);
+            mainPanel.Controls.Add(inputPanel, 0, 0);
             mainPanel.Controls.Add(employeeContainer, 0, 1);
 
             this.Controls.Add(mainPanel);
         }
 
-        // 作成ボタンクリック時の処理
         private void CreateGuestEvent(object sender, EventArgs e)
         {
-            var employee = CreateEmployee();
+            string inputName = nameInput.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(inputName))
+            {
+                MessageBox.Show("名前を入力してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var employee = CreateEmployee(inputName);
 
             var panel = new EmployeePanel(employee)
             {
@@ -87,22 +110,27 @@ namespace OOProjectBasedLeaning
 
             employeeContainer.Controls.Add(panel);
             NotifyHomeForm(employee);
+
+            nameInput.Clear(); // 入力欄をクリア
         }
 
-        // Employee作成（IDインクリメントと名前付与）
-        private Employee CreateEmployee()
+        // 名前付き従業員の作成
+        private Employee CreateEmployee(string name)
         {
             employeeId++;
-            return new EmployeeModel(employeeId, $"Employee{employeeId}");
+            return new EmployeeModel(employeeId, name);
         }
 
-        // HomeFormに従業員情報を送信
         private void NotifyHomeForm(Employee employee)
         {
             Application.OpenForms
                 .OfType<HomeForm>()
                 .FirstOrDefault()
                 ?.AddEmployee(employee);
+        }
+
+        private void EmployeeCreatorForm_Load(object sender, EventArgs e)
+        {
         }
     }
 }
