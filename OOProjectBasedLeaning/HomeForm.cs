@@ -93,5 +93,10 @@ namespace OOProjectBasedLeaning
             panel.Controls.Add(homeButton);
             employeeListPanel.Controls.Add(panel);
         }
+
+        private void HomeForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

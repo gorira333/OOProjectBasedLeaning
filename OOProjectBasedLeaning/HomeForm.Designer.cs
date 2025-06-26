@@ -39,6 +39,7 @@
             Name = "HomeForm";
             StartPosition = FormStartPosition.Manual;
             Text = "HomeForm";
+            Load += HomeForm_Load;
             ResumeLayout(false);
         }
 
