@@ -89,7 +89,7 @@ namespace OOProjectBasedLeaning
             NotifyHomeForm(employee);
         }
 
-        // 新規Employee作成（IDインクリメントと名前付与）
+        // Employee作成（IDインクリメントと名前付与）
         private Employee CreateEmployee()
         {
             employeeId++;
