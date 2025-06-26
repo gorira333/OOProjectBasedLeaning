@@ -46,7 +46,7 @@ namespace OOProjectBasedLeaning
             {
                 Text = "状態確認",
                 Location = new Point(20, 50),
-                Size = new Size(80, 25)
+                Size = new Size(110, 40)
             };
 
             statusButton.Click += (sender, e) =>

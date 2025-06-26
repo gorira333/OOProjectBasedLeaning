@@ -102,6 +102,14 @@ namespace OOProjectBasedLeaning
 
         private void InitializeComponent()
         {
+            SuspendLayout();
+            // 
+            // DragDropForm
+            // 
+            ClientSize = new Size(278, 244);
+            Name = "DragDropForm";
+            Load += DragDropForm_Load;
+            ResumeLayout(false);
 
         }
 
@@ -110,6 +118,10 @@ namespace OOProjectBasedLeaning
 
         }
 
+        private void DragDropForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class NullDragDropForm : DragDropForm, NullObject
