@@ -35,7 +35,9 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(758, 524);
+            Location = new Point(760, 670);
             Name = "Form1";
+            StartPosition = FormStartPosition.Manual;
             Text = "Form1";
             ResumeLayout(false);
         }

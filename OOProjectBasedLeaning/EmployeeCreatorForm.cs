@@ -7,13 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace OOProjectBasedLeaning
 {
-
+    
     public partial class EmployeeCreatorForm : Form
     {
-
+       
         private int employeeId = 10000;
 
         public EmployeeCreatorForm()
@@ -55,8 +56,10 @@ namespace OOProjectBasedLeaning
 
         }
 
-
-
+        private void EmployeeCreatorForm_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 
 }

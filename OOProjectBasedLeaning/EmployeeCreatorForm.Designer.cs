@@ -48,9 +48,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(758, 524);
             Controls.Add(button1);
+            Location = new Point(0, 100);
             Margin = new Padding(4, 5, 4, 5);
             Name = "EmployeeCreatorForm";
+            StartPosition = FormStartPosition.Manual;
             Text = "EmployeeCreatorForm";
+            Load += EmployeeCreatorForm_Load;
             ResumeLayout(false);
         }
 
