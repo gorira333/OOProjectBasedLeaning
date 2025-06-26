@@ -35,6 +35,12 @@ namespace OOProjectBasedLeaning
                 Location = new Point(140, 6),
                 Width = 160
             };
+            // TextBoxの変更をラベルに反映
+            guestNameTextBox.TextChanged += (sender, e) =>
+            {
+                employeeNameLabel.Text = guestNameTextBox.Text;
+            };
+
 
             Controls.Add(employeeNameLabel);
             Controls.Add(guestNameTextBox);
