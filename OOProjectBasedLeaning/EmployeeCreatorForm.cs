@@ -10,6 +10,7 @@ namespace OOProjectBasedLeaning
         private int employeeId = 10000;
         private FlowLayoutPanel employeeContainer;
         private Button createButton;
+        private Random rand = new Random(); // ★ 名前生成用の乱数
 
         public EmployeeCreatorForm()
         {
@@ -89,11 +90,18 @@ namespace OOProjectBasedLeaning
             NotifyHomeForm(employee);
         }
 
-        // Employee作成（IDインクリメントと名前付与）
+        // ★ 名前付き従業員オブジェクトの作成
         private Employee CreateEmployee()
         {
             employeeId++;
-            return new EmployeeModel(employeeId, $"Employee{employeeId}");
+
+            // 日本風の名前を自動生成
+            string[] firstNames = { "太郎", "花子", "一郎", "さくら", "健太", "美咲", "陽翔", "結衣" };
+            string[] lastNames = { "田中", "佐藤", "鈴木", "高橋", "伊藤", "山本", "中村", "渡辺" };
+
+            string fullName = $"{lastNames[rand.Next(lastNames.Length)]} {firstNames[rand.Next(firstNames.Length)]}";
+
+            return new EmployeeModel(employeeId, fullName);
         }
 
         // HomeFormに従業員情報を送信
@@ -103,6 +111,11 @@ namespace OOProjectBasedLeaning
                 .OfType<HomeForm>()
                 .FirstOrDefault()
                 ?.AddEmployee(employee);
+        }
+
+        private void EmployeeCreatorForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

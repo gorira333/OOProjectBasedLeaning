@@ -33,10 +33,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(614, 20);
-            button1.Margin = new Padding(4, 5, 4, 5);
+            button1.Location = new Point(430, 12);
             button1.Name = "button1";
-            button1.Size = new Size(127, 52);
+            button1.Size = new Size(89, 31);
             button1.TabIndex = 0;
             button1.Text = "従業員の作成";
             button1.UseVisualStyleBackColor = true;
@@ -44,13 +43,13 @@
             // 
             // EmployeeCreatorForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(758, 524);
+            ClientSize = new Size(531, 314);
             Controls.Add(button1);
-            Margin = new Padding(4, 5, 4, 5);
             Name = "EmployeeCreatorForm";
             Text = "EmployeeCreatorForm";
+            Load += EmployeeCreatorForm_Load;
             ResumeLayout(false);
         }
 
