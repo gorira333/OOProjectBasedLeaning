@@ -9,7 +9,7 @@ namespace OOProjectBasedLeaning
 
     public interface NullObject
     {
-
+        //test
     }
 
 }
