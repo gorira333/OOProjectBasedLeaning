@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using OOProjectBasedLeaning;
 
+
 namespace OOProjectBasedLeaning
 {
     /*
@@ -14,6 +15,8 @@ namespace OOProjectBasedLeaning
     {
         private Company company = NullCompany.Instance;
         private FlowLayoutPanel workPanelArea;
+        public Company CompanyInstance => company;
+
 
         public CompanyForm()
         {
@@ -130,16 +133,9 @@ namespace OOProjectBasedLeaning
 
             clockOutButton.Click += (sender, e) =>
             {
-                try
-                {
-                    employee.ClockOut();
-                    var now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
-                    clockOutLabel.Text = $"{employee.Name} 退勤: {now}";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"退勤エラー: {ex.Message}", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                employee.ClockOut();
+                var now = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                clockOutLabel.Text = $"{employee.Name} 退勤: {now}";
             };
 
             panel.Controls.Add(nameLabel);

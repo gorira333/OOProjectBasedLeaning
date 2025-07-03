@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OOProjectBasedLeaning
 {
-    /*
-    1人の従業員の状態を管理するクラス
-    */
     public interface Employee : Model
     {
         const int NEW = 0;
@@ -21,6 +20,23 @@ namespace OOProjectBasedLeaning
 
         bool IsAtWork();
         string GetStatusMessage();
+
+        IReadOnlyList<WorkSession> GetWorkSessions();
+    }
+
+    public class WorkSession
+    {
+        public DateTime ClockInTime { get; set; }
+        public DateTime? ClockOutTime { get; set; }
+
+        public override string ToString()
+        {
+            string outTime = ClockOutTime.HasValue
+                ? ClockOutTime.Value.ToString("yyyy/MM/dd HH:mm:ss")
+                : "退勤なし";
+
+            return $"出勤: {ClockInTime:yyyy/MM/dd HH:mm:ss} / 退勤: {outTime}";
+        }
     }
 
     public class EmployeeModel : ModelEntity, Employee
@@ -29,9 +45,10 @@ namespace OOProjectBasedLeaning
         private Company company = NullCompany.Instance;
 
         private DateTime? departedAt = null;
-        private DateTime? clockInAt = null;
-        private DateTime? clockOutAt = null;
         private DateTime? arrivedHomeAt = null;
+
+        private List<WorkSession> workSessions = new List<WorkSession>();
+        private WorkSession? currentSession = null;
 
         public EmployeeModel() : this(Employee.NEW) { }
         public EmployeeModel(int id) : this(id, string.Empty) { }
@@ -65,14 +82,26 @@ namespace OOProjectBasedLeaning
         public void Depart()
         {
             departedAt = DateTime.Now;
-            clockInAt = null;
-            clockOutAt = null;
+            currentSession = null;
             arrivedHomeAt = null;
+
+            // ✅ 履歴を残すので、勤務履歴はクリアしない！
+            // workSessions.Clear(); ← 削除！
         }
 
         public void ClockIn()
         {
-            clockInAt = DateTime.Now;
+            if (IsAtWork())
+            {
+                throw new InvalidOperationException("すでに出勤中です");
+            }
+
+            currentSession = new WorkSession
+            {
+                ClockInTime = DateTime.Now
+            };
+            workSessions.Add(currentSession);
+
             company.ClockIn(this);
         }
 
@@ -80,10 +109,14 @@ namespace OOProjectBasedLeaning
         {
             if (!IsAtWork())
             {
-                throw new InvalidOperationException("Employee is not at work");
+                throw new InvalidOperationException("出勤していません");
             }
-            clockOutAt = DateTime.Now;
+
+            currentSession!.ClockOutTime = DateTime.Now;
+
             company.ClockOut(this);
+
+            currentSession = null; // セッション終了
         }
 
         public void ArriveHome()
@@ -91,21 +124,26 @@ namespace OOProjectBasedLeaning
             arrivedHomeAt = DateTime.Now;
         }
 
-        public bool IsAtWork() => company.IsAtWork(this);
+        public bool IsAtWork()
+        {
+            return currentSession != null && currentSession.ClockOutTime == null;
+        }
 
         public string GetStatusMessage()
         {
             if (arrivedHomeAt.HasValue)
                 return "帰宅済み、未出発";
-            if (clockOutAt.HasValue)
+            if (currentSession == null && workSessions.Count > 0 && workSessions[^1].ClockOutTime.HasValue)
                 return "退勤済み、未帰宅";
-            if (clockInAt.HasValue)
+            if (IsAtWork())
                 return "出勤済み、未退勤";
             if (departedAt.HasValue)
                 return "出発済み、未出勤";
 
             return "未出発";
         }
+
+        public IReadOnlyList<WorkSession> GetWorkSessions() => workSessions.AsReadOnly();
     }
 
     public class Manager : EmployeeModel
@@ -136,6 +174,9 @@ namespace OOProjectBasedLeaning
         public void ArriveHome() { }
         public bool IsAtWork() => false;
         public string GetStatusMessage() => "未登録";
+
+        public IReadOnlyList<WorkSession> GetWorkSessions() =>
+            new List<WorkSession>().AsReadOnly();
     }
 
 }

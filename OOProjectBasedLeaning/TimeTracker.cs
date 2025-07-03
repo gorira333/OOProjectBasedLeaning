@@ -59,11 +59,6 @@ namespace OOProjectBasedLeaning
 
         public void PunchOut(int employeeId)
         {
-            if (!IsAtWork(employeeId))
-            {
-                throw new InvalidOperationException("Employee is not at work.");
-            }
-
             var today = DateTime.Today;
 
             if (!timestamp4PunchOut.ContainsKey(today))
