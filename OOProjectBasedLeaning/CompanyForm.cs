@@ -7,6 +7,9 @@ using OOProjectBasedLeaning;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+   会社で従業員の出退勤を管理する画面
+    */
     public partial class CompanyForm : Form
     {
         private Company company = NullCompany.Instance;

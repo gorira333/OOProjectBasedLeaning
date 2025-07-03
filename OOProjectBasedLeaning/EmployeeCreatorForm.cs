@@ -6,6 +6,9 @@ using static System.Windows.Forms.DataFormats;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+    新しい従業員を作成する画面
+    */
     public partial class EmployeeCreatorForm : Form
     {
         private int employeeId = 10000;
@@ -95,6 +98,15 @@ namespace OOProjectBasedLeaning
             if (string.IsNullOrWhiteSpace(inputName))
             {
                 MessageBox.Show("名前を入力してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            bool isDuplicate = employeeContainer.Controls
+               .OfType<EmployeePanel>()
+               .Any(panel => panel.Employee.Name.Equals(inputName, StringComparison.OrdinalIgnoreCase));
+
+            if (isDuplicate) {
+                MessageBox.Show("同じ名前の従業員は作成できません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

@@ -2,7 +2,9 @@
 
 namespace OOProjectBasedLeaning
 {
-
+    /*
+    1人の従業員の状態を管理するクラス
+    */
     public interface Employee : Model
     {
         const int NEW = 0;
