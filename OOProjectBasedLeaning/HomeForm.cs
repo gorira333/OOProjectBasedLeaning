@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+   ©‘î‘¤‚Å]‹Æˆõî•ñ‚ğˆµ‚¤‰æ–Ê
+    */
     public partial class HomeForm : Form
     {
         private FlowLayoutPanel employeeListPanel;

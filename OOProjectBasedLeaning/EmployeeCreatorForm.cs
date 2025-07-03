@@ -6,6 +6,9 @@ using static System.Windows.Forms.DataFormats;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+    新しい従業員を作成する画面
+    */
     public partial class EmployeeCreatorForm : Form
     {
         private int employeeId = 10000;

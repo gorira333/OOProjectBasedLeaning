@@ -7,6 +7,9 @@ using System.Xml.Linq;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+    従業員の管理・タイムトラッキング機能の橋渡し
+    */
     public interface Company : Model
     {
         Company AddTimeTracker(TimeTracker timeTracker);

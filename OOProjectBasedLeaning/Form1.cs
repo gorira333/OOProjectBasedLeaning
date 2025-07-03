@@ -3,6 +3,9 @@ namespace OOProjectBasedLeaning
 
     public partial class Form1 : Form
     {
+        /*
+        アプリケーションの起動時に呼ばれる「最初のフォーム」
+        */
 
         public Form1()
         {

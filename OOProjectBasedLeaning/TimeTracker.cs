@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+    1人の従業員の状態を管理するクラス
+    */
     public interface TimeTracker
     {
         void PunchIn(int employeeId);
