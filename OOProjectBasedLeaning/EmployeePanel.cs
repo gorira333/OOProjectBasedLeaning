@@ -12,7 +12,8 @@ namespace OOProjectBasedLeaning
         public Employee Employee => employee;
 
 
-
+       
+       
         public EmployeePanel(Employee employee)
         {
             this.employee = employee;
@@ -39,7 +40,7 @@ namespace OOProjectBasedLeaning
                 Location = new Point(140, 6),
                 Width = 160
             };
-            // TextBoxの変更をラベルに反映
+            // ✅ TextBoxの変更処理
             guestNameTextBox.TextChanged += (sender, e) =>
             {
                 employeeNameLabel.Text = guestNameTextBox.Text;
@@ -48,7 +49,9 @@ namespace OOProjectBasedLeaning
 
 
             Controls.Add(employeeNameLabel);
-            Controls.Add(guestNameTextBox);
+                Controls.Add(guestNameTextBox);
+
+            
         }
 
         public void SetupStatusButton()
@@ -65,8 +68,12 @@ namespace OOProjectBasedLeaning
                 string message = employee.GetStatusMessage();
                 MessageBox.Show($"{employee.Name} の状態：{message}", "勤務状態");
             };
-            //
+            
             Controls.Add(statusButton);
         }
+        
+
+
+
     }
 }

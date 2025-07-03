@@ -47,6 +47,10 @@ namespace OOProjectBasedLeaning
         // 従業員をパネルとして追加
         public void AddEmployee(Employee employee)
         {
+            var employeePanel = new EmployeePanel(employee);
+
+           
+
             var panel = new Panel
             {
                 Size = new Size(400, 70),
@@ -62,6 +66,8 @@ namespace OOProjectBasedLeaning
                 AutoSize = true,
                 Font = new Font("Segoe UI", 10, FontStyle.Bold)
             };
+            
+
 
             var departButton = CreateStyledButton("出発", new Point(200, 10));
             var homeButton = CreateStyledButton("帰宅", new Point(285, 10));
