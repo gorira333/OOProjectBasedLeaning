@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using OOProjectBasedLeaning;
 
+
 namespace OOProjectBasedLeaning
 {
     /*
@@ -14,6 +15,8 @@ namespace OOProjectBasedLeaning
     {
         private Company company = NullCompany.Instance;
         private FlowLayoutPanel workPanelArea;
+        public Company CompanyInstance => company;
+
 
         public CompanyForm()
         {
