@@ -114,9 +114,6 @@ namespace OOProjectBasedLeaning
         public void ClockOut()
         {
             if (!IsAtWork())
-            {
-                throw new InvalidOperationException("出勤していません");
-            }
 
             currentSession!.ClockOutTime = DateTime.Now;
 
