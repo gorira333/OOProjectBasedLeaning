@@ -8,6 +8,10 @@ namespace OOProjectBasedLeaning
     {
         public int EmployeeId => employee.Id;
         private Employee employee;
+        
+        public Employee Employee => employee;
+
+
 
         public EmployeePanel(Employee employee)
         {

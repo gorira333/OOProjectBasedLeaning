@@ -101,6 +101,15 @@ namespace OOProjectBasedLeaning
                 return;
             }
 
+            bool isDuplicate = employeeContainer.Controls
+               .OfType<EmployeePanel>()
+               .Any(panel => panel.Employee.Name.Equals(inputName, StringComparison.OrdinalIgnoreCase));
+
+            if (isDuplicate) {
+                MessageBox.Show("同じ名前の従業員は作成できません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var employee = CreateEmployee(inputName);
 
             var panel = new EmployeePanel(employee)
