@@ -61,8 +61,10 @@ namespace OOProjectBasedLeaning
 
             statusButton.Click += (sender, e) =>
             {
-                string message = employee.GetStatusMessage();
-                MessageBox.Show($"{employee.Name} の状態：{message}", "勤務状態");
+                string message = $"社員ID：{employee.Id}\n" +
+                 $"名前：{employee.Name}\n" +
+                 $"勤務状態：{employee.GetStatusMessage()}";
+                MessageBox.Show(message, "勤務状態の確認");
             };
 
             Controls.Add(statusButton);
