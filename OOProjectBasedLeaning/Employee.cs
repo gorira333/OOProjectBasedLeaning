@@ -2,6 +2,7 @@
 
 namespace OOProjectBasedLeaning
 {
+
     public interface Employee : Model
     {
         const int NEW = 0;
@@ -134,4 +135,5 @@ namespace OOProjectBasedLeaning
         public bool IsAtWork() => false;
         public string GetStatusMessage() => "未登録";
     }
+
 }

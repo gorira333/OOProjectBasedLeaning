@@ -39,6 +39,7 @@ namespace OOProjectBasedLeaning
             guestNameTextBox.TextChanged += (sender, e) =>
             {
                 employeeNameLabel.Text = guestNameTextBox.Text;
+                employee.Name = guestNameTextBox.Text;
             };
 
 
@@ -60,7 +61,7 @@ namespace OOProjectBasedLeaning
                 string message = employee.GetStatusMessage();
                 MessageBox.Show($"{employee.Name} の状態：{message}", "勤務状態");
             };
-
+            //
             Controls.Add(statusButton);
         }
     }
