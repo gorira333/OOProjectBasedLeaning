@@ -9,24 +9,32 @@ using OOProjectBasedLeaning;
 namespace OOProjectBasedLeaning
 {
     /*
-   会社で従業員の出退勤を管理する画面
-    */
+     * 会社画面（CompanyForm）
+     * 従業員の「出勤」「退勤」を管理する画面。
+     * 各従業員ごとに打刻パネルを追加して、ボタンで操作できる。
+     */
     public partial class CompanyForm : Form
     {
+        // 会社インスタンス（出勤/退勤記録や従業員の登録を管理）
         private Company company = NullCompany.Instance;
+
+        // 打刻用の従業員パネルを並べる領域
         private FlowLayoutPanel workPanelArea;
+
+        // 外部から会社オブジェクトにアクセスするためのプロパティ
         public Company CompanyInstance => company;
 
 
         public CompanyForm()
         {
+            // 会社と出退勤記録（TimeTracker）を初期化
             InitializeComponent();
 
             // 会社とタイムトラッカーの初期化
             company = new CompanyModel("MyCompany");
             new TimeTrackerModel(company);
 
-            // 打刻パネルエリアの設定
+            // 打刻パネルを並べる領域のレイアウト設定
             workPanelArea = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
