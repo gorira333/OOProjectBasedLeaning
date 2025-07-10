@@ -7,21 +7,29 @@ using static System.Windows.Forms.DataFormats;
 namespace OOProjectBasedLeaning
 {
     /*
-    新しい従業員を作成する画面
+    * EmployeeCreatorForm
+    * -------------------
+    * 新しい従業員を作成し、UIに表示する画面。
+    * 入力された名前をもとに EmployeeModel を生成し、
+    * その情報を EmployeePanel として表示する。
+    * また、HomeForm にも従業員データを通知する。
     */
     public partial class EmployeeCreatorForm : Form
     {
         private int employeeId = 10000;
+        // 従業員パネルを格納するコンテナ
         private FlowLayoutPanel employeeContainer;
+        // 作成ボタンと名前入力欄
         private Button createButton;
-        private TextBox nameInput; // ← 名前入力欄
+        private TextBox nameInput; 
 
         public EmployeeCreatorForm()
         {
             InitializeComponent();
-            SetupFormStyle();
-            InitializeLayout();
+            SetupFormStyle();// フォームの外観設定
+            InitializeLayout();// レイアウト構築
         }
+        // フォームの基本的なスタイル設定
 
         private void SetupFormStyle()
         {
@@ -30,7 +38,7 @@ namespace OOProjectBasedLeaning
             this.BackColor = Color.WhiteSmoke;
             this.Font = new Font("Segoe UI", 10);
         }
-
+        // UIコンポーネントのレイアウトを構築
         private void InitializeLayout()
         {
             // 名前入力欄
@@ -41,7 +49,7 @@ namespace OOProjectBasedLeaning
                 Margin = new Padding(10)
             };
 
-            // 作成ボタン
+            // 「Create Employee」ボタンの設定
             createButton = new Button
             {
                 Text = "Create Employee",
@@ -55,7 +63,7 @@ namespace OOProjectBasedLeaning
             };
             createButton.Click += CreateGuestEvent;
 
-            // 従業員パネルコンテナ
+            // 従業員パネルを縦方向に並べるコンテナ
             employeeContainer = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -66,7 +74,7 @@ namespace OOProjectBasedLeaning
                 BackColor = Color.White
             };
 
-            // レイアウトパネル
+            // 入力エリアの配置
             var inputPanel = new FlowLayoutPanel
             {
                 FlowDirection = FlowDirection.TopDown,
@@ -75,7 +83,7 @@ namespace OOProjectBasedLeaning
             };
             inputPanel.Controls.Add(nameInput);
             inputPanel.Controls.Add(createButton);
-
+            // 入力と一覧を分けて配置するテーブルレイアウト
             var mainPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -90,6 +98,7 @@ namespace OOProjectBasedLeaning
 
             this.Controls.Add(mainPanel);
         }
+        // ボタンクリックで従業員作成処理を実行
 
         private void CreateGuestEvent(object sender, EventArgs e)
         {
@@ -109,7 +118,7 @@ namespace OOProjectBasedLeaning
                 MessageBox.Show("同じ名前の従業員は作成できません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            // 従業員を作成し、表示用のパネルを生成
             var employee = CreateEmployee(inputName);
 
             var panel = new EmployeePanel(employee)
@@ -120,20 +129,23 @@ namespace OOProjectBasedLeaning
                 BorderStyle = BorderStyle.FixedSingle,
                 Margin = new Padding(5)
             };
-
+            // UIに追加
             employeeContainer.Controls.Add(panel);
+
+            // HomeForm にも通知して一元管理させる
             NotifyHomeForm(employee);
 
-            nameInput.Clear(); // 入力欄をクリア
+            // 入力欄をリセット
+            nameInput.Clear();
         }
 
-        // 名前付き従業員の作成
+        // 一意の社員IDで従業員インスタンスを作成
         private Employee CreateEmployee(string name)
         {
             employeeId++;
             return new EmployeeModel(employeeId, name);
         }
-
+        // HomeForm に従業員を通知する（データ共有）
         private void NotifyHomeForm(Employee employee)
         {
             Application.OpenForms
