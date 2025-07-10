@@ -133,13 +133,22 @@ namespace OOProjectBasedLeaning
         {
             if (arrivedHomeAt.HasValue)
                 return "帰宅済み、未出発";
-            if (currentSession == null && workSessions.Count > 0 && workSessions[^1].ClockOutTime.HasValue)
-                return "退勤済み、未帰宅";
+            
             if (IsAtWork())
                 return "出勤済み、未退勤";
             if (departedAt.HasValue)
-                return "出発済み、未出勤";
+            {
+                if (workSessions.Count > 0 &&
+                    workSessions[^1].ClockOutTime.HasValue &&
+                    workSessions[^1].ClockOutTime > departedAt)
+                {
+                    return "退勤済み、未帰宅";
+                }
 
+                return "出発済み、未出勤";
+            }
+
+            return "未出発";
             return "未出発";
         }
 
