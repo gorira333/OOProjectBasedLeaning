@@ -8,25 +8,31 @@ using System.Threading.Tasks;
 namespace OOProjectBasedLeaning
 {
     /*
-    1人の従業員の状態を管理するクラス
-    */
+ * 従業員の出退勤打刻を管理するインターフェース
+ * Company 経由で各従業員に紐づけて使用される
+ */
     public interface TimeTracker
     {
-        void PunchIn(int employeeId);
-        void PunchOut(int employeeId);
-        bool IsAtWork(int employeeId);
+        void PunchIn(int employeeId);   // 出勤打刻
+        void PunchOut(int employeeId);  // 退勤打刻
+        bool IsAtWork(int employeeId);  // 勤務中かどうか
     }
+    /*
+ * 出退勤の打刻時刻を日付ごとに記録するモデルクラス
+ */
 
     public class TimeTrackerModel : TimeTracker
     {
         private Company company = NullCompany.Instance;
 
+        // 出勤時刻：日付 → 従業員ID → 出勤時刻
         private Dictionary<DateTime, Dictionary<int, DateTime>> timestamp4PunchIn =
             new Dictionary<DateTime, Dictionary<int, DateTime>>();
 
+        // 退勤時刻：日付 → 従業員ID → 退勤時刻
         private Dictionary<DateTime, Dictionary<int, DateTime>> timestamp4PunchOut =
             new Dictionary<DateTime, Dictionary<int, DateTime>>();
-
+        // 打刻モード（今後の拡張用）
         private Mode mode = Mode.PunchIn;
 
         private enum Mode
@@ -34,12 +40,12 @@ namespace OOProjectBasedLeaning
             PunchIn,
             PunchOut
         };
-
+        // コンストラクタ：Company に自身を登録する
         public TimeTrackerModel(Company company)
         {
             this.company = company.AddTimeTracker(this);
         }
-
+        // 出勤打刻の処理
         public void PunchIn(int employeeId)
         {
             if (IsAtWork(employeeId))
@@ -48,7 +54,7 @@ namespace OOProjectBasedLeaning
             }
 
             var today = DateTime.Today;
-
+            // 今日の打刻情報がなければ初期化
             if (!timestamp4PunchIn.ContainsKey(today))
             {
                 timestamp4PunchIn[today] = new Dictionary<int, DateTime>();
@@ -56,7 +62,7 @@ namespace OOProjectBasedLeaning
 
             timestamp4PunchIn[today][employeeId] = DateTime.Now;
         }
-
+        // 退勤打刻の処理
         public void PunchOut(int employeeId)
         {
             var today = DateTime.Today;
@@ -68,7 +74,7 @@ namespace OOProjectBasedLeaning
 
             timestamp4PunchOut[today][employeeId] = DateTime.Now;
         }
-
+        // 現在勤務中かどうかを判定するロジック
         public bool IsAtWork(int employeeId)
         {
             var today = DateTime.Today;
@@ -82,6 +88,10 @@ namespace OOProjectBasedLeaning
             return hasPunchIn && !hasPunchOut;
         }
     }
+
+    /*
+     * Null Object パターン：打刻が不要な場合のダミー実装
+     */
 
     public class NullTimeTracker : TimeTracker, NullObject
     {
