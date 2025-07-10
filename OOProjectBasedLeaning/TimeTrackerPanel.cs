@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace OOProjectBasedLeaning
 {
+    /*
+ * 出退勤管理用の UI パネルクラス
+ * TimeTracker の情報をもとに出勤・退勤ボタンなどを表示・制御する
+ */
 
     public class TimeTrackerPanel : Panel
     {
 
             private TimeTracker timeTracker;
-    
-            public TimeTrackerPanel(TimeTracker timeTracker)
+        /*
+        * コンストラクタ：TimeTracker のインスタンスを受け取り、UIを初期化する
+        */
+
+        public TimeTrackerPanel(TimeTracker timeTracker)
             {
     
                 this.timeTracker = timeTracker;
